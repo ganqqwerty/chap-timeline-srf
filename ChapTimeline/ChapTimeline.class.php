@@ -66,7 +66,11 @@ class ChapTimeline extends SMWResultPrinter {
 						'message' => 'srf_paramdesc_startproperty',
 						'default' => '',
 				);
-
+				
+				$params['startproperty'] = array(
+						'message' => 'srf_paramdesc_startproperty',
+						'default' => ''
+				);
 				$params['endproperty'] = array(
 						'message' => 'srf_paramdesc_endproperty',
 						'default' => ''
@@ -296,3 +300,4 @@ class ChapTimeline extends SMWResultPrinter {
 				return true;
 		}
 }
+

@@ -61,12 +61,7 @@ class ChapTimeline extends SMWResultPrinter {
 		 */
 		public function getParamDefinitions( array $definitions ) {
 				$params = parent::getParamDefinitions( $definitions );
-				$startpr = array(
-						'name' => 'startproperty',
-						'message' => 'srf_paramdesc_startproperty',
-						'default' => '',
-				);
-				
+
 				$params['startproperty'] = array(
 						'message' => 'srf_paramdesc_startproperty',
 						'default' => ''
@@ -300,4 +295,3 @@ class ChapTimeline extends SMWResultPrinter {
 				return true;
 		}
 }
-

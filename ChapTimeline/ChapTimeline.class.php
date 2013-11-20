@@ -66,8 +66,6 @@ class ChapTimeline extends SMWResultPrinter {
 						'message' => 'srf_paramdesc_startproperty',
 						'default' => '',
 				);
-				$params['startproperty']= ParamProcessor\ParamDefinitionFactory::singleton()->newDefinitionFromArray( $startpr );
-				$params['startproperty']->setValidationCallback( 'startDateValid');
 
 				$params['endproperty'] = array(
 						'message' => 'srf_paramdesc_endproperty',
@@ -297,8 +295,4 @@ class ChapTimeline extends SMWResultPrinter {
 				}
 				return true;
 		}
-}
-
-function startDateValid ($value) {
-		return true;
 }

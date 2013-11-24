@@ -35,6 +35,7 @@ class ChapTimeline extends SMWResultPrinter {
 
 				$wgOut->addScriptFile("http://www.google.com/jsapi");
 				$wgOut->addScriptFile("$wgScriptPath/extensions/ChapTimeline/js/timeline.js");
+				$wgOut->addScriptFile("$wgScriptPath/extensions/ChapTimeline/js/timeline-locales.js");
 				$wgOut->addScriptFile("$wgScriptPath/extensions/ChapTimeline/js/ext.ChapTimeline.core.js");
 				$wgOut->addLink(array('rel'=>"stylesheet",
 						"type"=>"text/css",
@@ -63,33 +64,122 @@ class ChapTimeline extends SMWResultPrinter {
 				$params = parent::getParamDefinitions( $definitions );
 
 				$params['startproperty'] = array(
-						'message' => 'srf_paramdesc_startproperty',
+						'message' => 'srf-paramdesc-chaptimeline-startproperty',
 						'default' => ''
 				);
 				$params['endproperty'] = array(
-						'message' => 'srf_paramdesc_endproperty',
+						'message' => 'srf-paramdesc-chaptimeline-endproperty',
 						'default' => ''
 				);
 				$params['template'] = array(
-						'message' => 'srf_paramdesc_template',
+						'message' => 'srf-paramdesc-chaptimeline-template',
 						'default' => ''
 				);
 				$params['width'] = array(
-						'message' => 'srf_paramdesc_width',
+						'message' => 'srf-paramdesc-chaptimeline-width',
 						'default' => '100%'
 				);
 				$params['height'] = array(
-						'message' => 'srf_paramdesc_height',
+						'message' => 'srf-paramdesc-chaptimeline-height',
 						'default' => '300px'
 				);
 				$params['style'] = array(
-						'message' => 'srf_paramdesc_style',
+						'message' => 'srf-paramdesc-chaptimeline-style',
 						'default' => 'box'
 				);
 				$params['cluster'] = array (
-						'message' => 'srf_paramdesc_cluster',
-						'default' => 'false',
-						'allowed values' => array( 'false', 'true' ),
+						'message' => 'srf-paramdesc-chaptimeline-cluster',
+						'default' => false,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['showNavigation'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-showNavigation',
+						'default' => false,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['zoomable'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-zoomable',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['zoomMax'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-zoomMax',
+						'default' => ''
+				);
+				$params['zoomMin'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-zoomMin',
+						'default' => ''
+				);
+				$params['showMinorLabels'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-showMinorLabels',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['showMajorLabels'] =array (
+						'message' => 'srf-paramdesc-chaptimeline-showMajorLabels',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['showCurrentTime'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-showCurrentTime',
+						'default' => false,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['showCustomTime'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-showCustomTime',
+						'default' => false,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['stackEvents'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-stackEvents',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['minHeight'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-minHeight',
+						'default' => '0'
+				);
+				$params['min'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-min',
+						'default' => ''
+				);
+				$params['max'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-max',
+						'default' => ''
+				);
+				$params['start'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-start',
+						'default' => ''
+				);
+				$params['end'] = array(
+						'message' => 'srf-paramdesc-chaptimeline-end',
+						'default' => ''
+				);
+				$params['axisOnTop']  = array (
+						'message' => 'srf-paramdesc-chaptimeline-axisOnTop',
+						'default' => false,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['animateZoom'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-animateZoom',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
+				);
+				$params['animate'] = array (
+						'message' => 'srf-paramdesc-chaptimeline-animate',
+						'default' => true,
+						'type' => 'boolean',
+						'allowed values' => array( false, true ),
 				);
 				return $params;
 		}
@@ -146,6 +236,7 @@ class ChapTimeline extends SMWResultPrinter {
 		 * @return string
 		 */
 		protected function getFormatOutput( $data) {
+				global $wgLanguageCode;
 
 				// The generated ID is to distinguish similar instances of the same
 				// printer that can appear within the same page
@@ -161,12 +252,31 @@ class ChapTimeline extends SMWResultPrinter {
 
 				// Assign the ID to make a data instance readly available and distinguishable
 				// from other content within the same page
+
 				$options = array(
 					"width" => $this->params['width'],
 					"height" => $this->params['height'],
 					"style" => $this->params['style'], //sometimes we'll support style=box
 					"cluster" => $this->params['cluster'],
-				);
+					"showNavigation" => $this->params['showNavigation'],
+					"zoomable" => $this->params['zoomable'],
+					"zoomMax" => $this->params['zoomMax'],
+					"zoomMin" => $this->params['zoomMin'],
+					"showMinorLabels" => $this->params['showMinorLabels'],
+					"showMajorLabels" => $this->params['showMajorLabels'],
+					"showCurrentTime" => $this->params['showCurrentTime'],
+					"showCustomTime" => $this->params['showCustomTime'],
+					"stackEvents" => $this->params['stackEvents'],
+					"minHeight" => $this->params['minHeight'],
+					"min" => $this->params['min'],
+					"max" => $this->params['max'],
+					"start" => $this->params['start'],
+					"end" => $this->params['end'],
+					"axisOnTop" => $this->params['axisOnTop'],
+					"animateZoom" => $this->params['animateZoom'],
+					"animate" => $this->params['animate'],
+					"locale" => $wgLanguageCode,
+		);
 				$requireHeadItem = array ( $ID => FormatJson::encode( $data ),
 																	 $ID."-options" => FormatJson::encode($options));
 				SMWOutputs::requireHeadItem( $ID, Skin::makeVariablesScript( $requireHeadItem ) );

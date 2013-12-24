@@ -8,7 +8,9 @@
  * @licence GNU GPL v3
  * @author WikiVote! ltd. < http://wikivote.ru >
  */
- 
+
+global $srfgFormats, $smwgResultFormats, $wgVersion;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
@@ -27,8 +29,18 @@ $wgExtensionCredits['specialpage'][] = array(
     'descriptionmsg' => 'ChapTimeline-desc',
 );
 
-///* Resource modules */
-//we don't use ResourceLoader since we're dependent on Google API with cannot be loaded with ResourceLoader
+/* Resource modules */
+$wgResourceModules['ext.chapTimeline.main'] = array(
+	'localBasePath' => dirname( __FILE__ ) . '/',
+	'remoteExtPath' => 'ChapTimeline/',
+	'group' => 'ext.ChapTimeline',
+	'scripts' => array('js/timeline.js','js/timeline-locales.js','js/ext.ChapTimeline.core.js'),
+	'styles' => 'css/timeline.css',
+	'dependencies' => array(
+		'ext.srf',
+		'ext.srf.util',
+	)
+);
 
 /* Message Files */
 $wgExtensionMessagesFiles['ChapTimeline'] = dirname( __FILE__ ) . '/ChapTimeline.i18n.php';
@@ -36,6 +48,5 @@ $wgExtensionMessagesFiles['ChapTimeline'] = dirname( __FILE__ ) . '/ChapTimeline
 /* Autoload classes */
 $wgAutoloadClasses['ChapTimeline'] = dirname( __FILE__ ) . '/ChapTimeline.class.php';
 
-global $srfgFormats, $smwgResultFormats;
 $srfgFormats[] = 'chap-timeline';
 $smwgResultFormats['chap-timeline'] = 'ChapTimeline';

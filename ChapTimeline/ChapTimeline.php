@@ -25,8 +25,8 @@ $wgExtensionCredits['specialpage'][] = array(
     'name' => 'ChapTimeline',
     'version' => '0.1',
     'author' => 'Wikivote! ltd',
-    'url' => '',
-    'descriptionmsg' => 'ChapTimeline-desc',
+    'url' => 'https://www.mediawiki.org/wiki/Extension:ChapTimeline',
+    'descriptionmsg' => 'chaptimeline-desc',
 );
 
 /* Resource modules */
@@ -34,7 +34,7 @@ $wgResourceModules['ext.chapTimeline.main'] = array(
 	'localBasePath' => dirname( __FILE__ ) . '/',
 	'remoteExtPath' => 'ChapTimeline/',
 	'group' => 'ext.ChapTimeline',
-	'scripts' => array('js/timeline.js','js/timeline-locales.js','js/ext.ChapTimeline.core.js'),
+	'scripts' => array('js/timeline-locales.js', 'js/timeline.js', 'js/ext.ChapTimeline.core.js'),
 	'styles' => 'css/timeline.css',
 	'dependencies' => array(
 		'ext.srf',

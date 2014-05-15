@@ -67,8 +67,8 @@
 						var start = phpData[phpEvent].start;
 						var end = phpData[phpEvent].end;
 						var content = phpData[phpEvent].content;
-						data.addRow([new Date(start.year, start.month, start.day, start.hours, start.minutes, start.seconds),
-							(end != null) ? new Date(end.year, end.month, end.day, end.hours, end.minutes, end.seconds) : null,
+						data.addRow([new Date(start.year, start.month-1, start.day, start.hours, start.minutes, start.seconds),
+							(end != null) ? new Date(end.year, end.month-1, end.day, end.hours, end.minutes, end.seconds) : null,
 							content
 						]);
 

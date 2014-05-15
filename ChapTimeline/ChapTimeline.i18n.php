@@ -5,7 +5,7 @@ $messages = array();
 
 /* English */
 $messages['en'] = array(
-		'ChapTimeline-desc' => 'displays nice timeline',
+		'chaptimeline-desc' => 'displays nice timeline',
 		'chap-timeline' => 'chap-timeline',
 		'srf-paramdesc-chaptimeline-startproperty' => 'Property that stores starting date of an object',
 		'srf-paramdesc-chaptimeline-endproperty' => 'Property that stores ending date of an object',
@@ -35,7 +35,7 @@ $messages['en'] = array(
 
 /* Russian */
 $messages['ru'] = array(
-		'ChapTimeline-desc' => 'displays nice timeline',
+		'chaptimeline-desc' => 'displays nice timeline',
 		'chap-timeline' => 'chap-timeline',
 		'srf-paramdesc-chaptimeline-startproperty' => 'Property that stores starting date of an object',
 		'srf-paramdesc-chaptimeline-endproperty' => 'Property that stores ending date of an object',

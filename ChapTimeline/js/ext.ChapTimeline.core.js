@@ -76,6 +76,8 @@
 					// specify options
 					var options = jQuery.parseJSON(mw.config.get(ID + '-options'));
 
+                    options.start = Date.parse(options.start);
+                    options.end = Date.parse(options.end);
 					// Instantiate our timeline object.
 					timeline = new links.Timeline(document.getElementById(ID));
 
